@@ -1,12 +1,11 @@
-import TimelineItem from "@/components/timelineItem";
+import TimelineItem from "@/components/home/timelineItem";
 import { pool } from "../../../db/db";
-import PortfolioItem from "@/components/portfolioItem";
-import ContatoItem from "@/components/contatoItem";
+import PortfolioItem from "@/components/home/portfolioItem";
+import ContatoItem from "@/components/home/contatoItem";
 
 export default async function Home() {
   const client = await pool.connect();
 
- 
     let data = await client.query("SELECT * FROM PUBLIC.TIMELINE WHERE STATUS = 'S'");
     const timeline = data.rows;
 
@@ -17,8 +16,8 @@ export default async function Home() {
     const contact = data.rows;
 
     client.release()
-  
-
+ 
+    
   return (
     <>
       <div className="flex items-center justify-center flex-col text-center pt-20 pb-6">
