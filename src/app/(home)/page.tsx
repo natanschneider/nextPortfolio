@@ -6,18 +6,23 @@ import ContatoItem from "@/components/home/contatoItem";
 export default async function Home() {
   const client = await pool.connect();
 
-    let data = await client.query("SELECT * FROM PUBLIC.TIMELINE WHERE STATUS = 'S'");
-    const timeline = data.rows;
+  let data = await client.query(
+    "SELECT * FROM PUBLIC.TIMELINE WHERE STATUS = 'S'"
+  );
+  const timeline = data.rows;
 
-    data = await client.query("SELECT * FROM PUBLIC.PROJECTS WHERE STATUS = 'S'");
-    const portfolio = data.rows;
+  data = await client.query(
+    "SELECT * FROM PUBLIC.PROJECTS WHERE STATUS = 'S'"
+  );
+  const portfolio = data.rows;
 
-    data = await client.query("SELECT * FROM PUBLIC.CONTACT WHERE STATUS = 'S'")
-    const contact = data.rows;
+  data = await client.query(
+    "SELECT * FROM PUBLIC.CONTACT WHERE STATUS = 'S'"
+  );
+  const contact = data.rows;
 
-    client.release()
- 
-    
+  client.release();
+
   return (
     <>
       <div className="flex items-center justify-center flex-col text-center pt-20 pb-6">
@@ -36,23 +41,23 @@ export default async function Home() {
       </div>
 
       <div>
-      <h1 className="text-2x1 font-bold underline underline-offset-8 decoration-4 mb-5 text-white">
-            Projetos
-          </h1>
-      <div className="flex flex-col md:flex-row items-center justify-center w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {portfolio.map((item: any) => (
-            <PortfolioItem
-              key={item.id}
-              title={item.nome}
-              imgUrl={item.img_url}
-              stack={item.stack}
-              link={item.url}
-              repository={item.repo}
-            />
-          ))}
+        <h1 className="text-2x1 font-bold underline underline-offset-8 decoration-4 mb-5 text-white">
+          Projetos
+        </h1>
+        <div className="flex flex-col md:flex-row items-center justify-center w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {portfolio.map((item: any) => (
+              <PortfolioItem
+                key={item.id}
+                title={item.nome}
+                imgUrl={item.img_url}
+                stack={item.stack}
+                link={item.url}
+                repository={item.repo}
+              />
+            ))}
+          </div>
         </div>
-      </div>
       </div>
 
       <div className="flex flex-col md:flex-row justify-center my-20">
@@ -60,7 +65,6 @@ export default async function Home() {
           <h1 className="text-2x1 font-bold underline underline-offset-8 decoration-4 mb-5 text-white">
             Timeline
           </h1>
-
           {timeline.map((item: any) => (
             <TimelineItem
               key={item.id}
@@ -87,8 +91,8 @@ export default async function Home() {
           </div>
           <div className="grow-0 shrink-0 basis-auto w-full lg:w-7/12">
             <div className="flex flex-wrap">
-              {contact.map((item:any) => (
-                <ContatoItem  
+              {contact.map((item: any) => (
+                <ContatoItem
                   key={item.id}
                   nome={item.nome}
                   description={item.description}
