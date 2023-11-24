@@ -7,7 +7,7 @@ export default function NotFound() {
           404 - NOT FOUND
         </h1>
         <p className="text-base md:text-x1 mb-3 font-medium">
-          Algo deu errado, parece que este conteudo não existe.
+          Algo deu errado, parece que este conteúdo não existe.
         </p>
         
         <Link href={'/'}>Me leve de volta</Link>
