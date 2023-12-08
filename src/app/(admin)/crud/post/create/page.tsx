@@ -20,12 +20,12 @@ export default function Page() {
     if (id > 0) {
       const callDb = async () => {
           let dbResponse = await getPost(id);
-          
+
           setTitle(dbResponse.title??'');
           setAuthor(dbResponse.author??'');
           setResume(dbResponse.resume??'');
           setQuill(dbResponse.content??'');
-          setPublicado(dbResponse.publicado??false);
+          setPublicado(dbResponse.published?true:false);
       };
       callDb();
     }
