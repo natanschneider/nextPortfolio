@@ -9,11 +9,11 @@ export default async function Page({ params }: { params: { id: String } }) {
     [params.id]
   );
   const post = data.rows[0];
-  
+
   client.release();
 
-  if(!post){
-    notFound()
+  if (!post) {
+    notFound();
   }
 
   return (
@@ -23,12 +23,13 @@ export default async function Page({ params }: { params: { id: String } }) {
           <h1>{post.title}</h1>
           <div className="text-sm gap-3">
             <p>Escrito por: {post.author}</p>
-            <p>{ post.created_at }</p>
+            <p>{post.created_at}</p>
           </div>
         </div>
-        <article className="prose prose-stone prose-invert mx-auto mt-8 lg:prose-lg">
-          {post.content}
-        </article>
+        <article
+          dangerouslySetInnerHTML={{ __html: post.content }}
+          className="prose prose-stone prose-invert mx-auto mt-8 lg:prose-lg"
+        />
       </div>
     </div>
   );
