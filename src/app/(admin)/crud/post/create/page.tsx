@@ -5,6 +5,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { insertPost, getPost, updatePost } from "@/app/action";
 import { useSearchParams } from "next/navigation";
+import Swal, { SweetAlertIcon } from "sweetalert2";
 
 export default function Page() {
   const [quill, setQuill] = useState("");
@@ -13,23 +14,32 @@ export default function Page() {
   const [resume, setResume] = useState("");
   const [publicado, setPublicado] = useState(false);
 
-  const urlParams = useSearchParams()
-  const id:any = urlParams.get('id');
+  const urlParams = useSearchParams();
+  const id: any = urlParams.get("id");
 
   useEffect(() => {
     if (id > 0) {
       const callDb = async () => {
-          let dbResponse = await getPost(id);
+        let dbResponse = await getPost(id);
 
-          setTitle(dbResponse.title??'');
-          setAuthor(dbResponse.author??'');
-          setResume(dbResponse.resume??'');
-          setQuill(dbResponse.content??'');
-          setPublicado(dbResponse.published?true:false);
+        setTitle(dbResponse.title ?? "");
+        setAuthor(dbResponse.author ?? "");
+        setResume(dbResponse.resume ?? "");
+        setQuill(dbResponse.content ?? "");
+        setPublicado(dbResponse.published ? true : false);
       };
       callDb();
     }
   }, [id]);
+
+  const showSwal = (message:string, title:string, icon:SweetAlertIcon) => {
+    Swal.fire({
+      title: title,
+      text: message,
+      icon: icon,
+      confirmButtonText: "Cool",
+    });
+  };
 
   const modules = {
     toolbar: [
@@ -81,11 +91,23 @@ export default function Page() {
     formData.append("resume", resume);
     formData.append("content", quill);
 
-    if(id){
+    if (id) {
       formData.append("id", id);
-      updatePost(formData, publicado);
-    }else{
-      insertPost(formData, publicado);
+      updatePost(formData, publicado).then(value => {
+        if(value == 'success'){
+          showSwal('Post atualizado com sucesso.', 'Sucesso', 'success')
+        }else{
+          showSwal('Erro ao atualizar post.', 'Erro', 'error')
+        }
+      });
+    } else {
+      insertPost(formData, publicado).then(value => {
+        if(value == 'success'){
+          showSwal('Post criado com sucesso.', 'Sucesso', 'success')
+        }else{
+          showSwal('Erro ao criar post.', 'Erro', 'error')
+        }
+      });
     }
   };
 
@@ -124,7 +146,13 @@ export default function Page() {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-row gap-4 mb-4">
-            <input id="publicado" type="checkbox" checked={publicado} onChange={e => setPublicado(e.target.checked)} name="publicado" />
+            <input
+              id="publicado"
+              type="checkbox"
+              checked={publicado}
+              onChange={(e) => setPublicado(e.target.checked)}
+              name="publicado"
+            />
             <label htmlFor="publicado">Publicado</label>
           </div>
         </div>
@@ -136,8 +164,12 @@ export default function Page() {
         formats={formats}
         id="quill"
       />
-      <input type="hidden" name="id" id="id" value={id??''} />
-      <button className="bg-blue-600 h-12 w-28 rounded-md mt-4" onClick={handleFormSubmit} >Enviar</button>
+      <input type="hidden" name="id" id="id" value={id ?? ""} />
+      <button
+        className="bg-blue-600 h-12 w-28 rounded-md mt-4"
+        onClick={handleFormSubmit}>
+        Enviar
+      </button>
     </div>
   );
 }
