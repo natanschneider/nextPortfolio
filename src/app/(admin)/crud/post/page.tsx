@@ -19,6 +19,9 @@ export default async function Page() {
             <div>{item.published?'PUBLICADO':'RASCUNHO'}</div>
         </>
       ))}
+      <a className="truncate cursor-pointer text-slate-300 bg-blue-600 rounded-md p-1.5 mt-2" href='/crud/post/create' >Criar novo</a>
+      
+
     </div>
   );
 }
