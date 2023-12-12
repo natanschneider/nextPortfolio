@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": true
+            },
+            "previewLimit": 50,
+            "server": "ep-crimson-cake-39797863.us-east-2.aws.neon.tech",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Postgres PortfolioNext",
+            "database": "neondb",
+            "username": "production",
+            "password": "SCZbksY03KQw"
+        }
+    ]
+}
