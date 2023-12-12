@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="bg-gray-900 text-stone-300 min-h-screen">
           <Header />
-          <div className="max-w-5xl w-11/12 mx-auto">{children}</div>
+          <div className="max-w-5xl w-11/12 mx-auto py-6">{children}</div>
         </div>
       </body>
     </html>
